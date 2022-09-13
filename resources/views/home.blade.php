@@ -13,11 +13,11 @@
             <div class="card-body">
                 <h2 class="card-title">{{$posts->title}}</h2>
                 <p class="card-text">{{Str::limit($posts->body, '300', '...')}}</p>
-                <a href="#" class="btn btn-primary">Read More &rarr;</a>
+                <a href="{{route('post', $posts->id)}}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
                 Posted on January 1, 2017 by
-                <a href="#">Start Bootstrap</a>
+                <a href="">Start Bootstrap</a>
             </div>
         </div>
         @endforeach
