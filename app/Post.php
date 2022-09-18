@@ -10,4 +10,7 @@ class Post extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+    public function setPostImageAttribute($value) {
+        $this->attributes['post_image'] = asset($value);
+    }
 }
