@@ -1,6 +1,11 @@
 <x-admin-master>
     @section('content')
         <h1 class="h3 mb-4 text-gray-800">View All Posts</h1>
+            @if(Session::has('message'))
+                <div class="alert alert-danger">{{Session::get('message')}}</div>
+        @elseif(Session::has('createMessage'))
+            <div class="alert alert-success">{{Session::get('createMessage')}}</div>
+            @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
@@ -27,7 +32,6 @@
                             <th>Created At</th>
                             <th>Updated At</th>
                         </tr>
-                        </tfoot>
                          <tbody>
                             @foreach($posts as $post)
                                 <tr>
@@ -37,6 +41,14 @@
                                     <td><div><img height="40px" src="{{asset($post->post_image)}}"></div></td>
                                     <td>{{$post->created_at->diffForHumans()}}</td>
                                     <td>{{$post->updated_at->diffForHumans()}}</td>
+                                    <td>
+                                        <form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data" >
+                                            @csrf
+                                            @method('DELETE')
+
+                                          <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                          </tbody>

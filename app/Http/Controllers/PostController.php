@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+//use MongoDB\Driver\Session;
+use Illuminate\Support\Facades\Session;
 
 class PostController extends Controller
 {
@@ -27,6 +29,13 @@ class PostController extends Controller
            $inputs['post_image'] = request('post_image')->store('images');
        }
        auth()->user()->posts()->create($inputs);
-        return back();
+       Session::flash('createMessage', 'Post Created');
+        return redirect()->route('post.index');
+    }
+
+    public function destroy(Post $post) {
+               $post->delete();
+               Session::flash('message', 'Post Deleted');
+                return back();
     }
 }
