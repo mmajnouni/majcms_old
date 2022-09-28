@@ -5,6 +5,8 @@
                 <div class="alert alert-danger">{{Session::get('message')}}</div>
         @elseif(Session::has('createMessage'))
             <div class="alert alert-success">{{Session::get('createMessage')}}</div>
+        @elseif(Session::has('updateMessage'))
+            <div class="alert alert-success">{{Session::get('updateMessage')}}</div>
             @endif
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -37,17 +39,19 @@
                                 <tr>
                                     <td>{{$post->id}}</td>
                                     <th>{{$post->user->name}}</th>
-                                    <td>{{$post->title}}</td>
+                                    <td><a href="{{route('post.edit', $post->id)}}">{{$post->title}}</a></td>
                                     <td><div><img height="40px" src="{{asset($post->post_image)}}"></div></td>
                                     <td>{{$post->created_at->diffForHumans()}}</td>
                                     <td>{{$post->updated_at->diffForHumans()}}</td>
                                     <td>
+                                        @can('view', $post)
                                         <form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data" >
                                             @csrf
                                             @method('DELETE')
 
                                           <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
