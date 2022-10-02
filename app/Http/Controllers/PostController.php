@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 //use MongoDB\Driver\Session;
 use Illuminate\Support\Facades\Session;
@@ -10,16 +11,20 @@ use Illuminate\Support\Facades\Session;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::all();
+        //$posts = Post::all();
+        $posts = auth()->user()->posts()->paginate(2);
+
         return view('admin.posts.index', ['posts'=> $posts]);
     }
     public function show(Post $post) {
         return view('blog-post', ['post' => $post]);
     }
     public function create(){
+
         return view('admin.posts.create');
     }
     public function store() {
+        $this->authorize('create', Post::class);
        $inputs = request()->validate([
            'title' => 'required|min:4|max:255',
            'post_image'  => 'file',
@@ -34,12 +39,13 @@ class PostController extends Controller
     }
 
     public function destroy(Post $post) {
+        $this->authorize('delete', $post);
                $post->delete();
                Session::flash('message', 'Post Deleted');
                 return back();
     }
     public function edit(Post $post){
-//        $this->authorize('view', $post);
+        $this->authorize('view', $post);
         return view('admin.posts.edit', ['post' => $post]);
     }
 

@@ -60,6 +60,11 @@
                 </div>
             </div>
         </div>
+    <div class="d-flex">
+    <div class="mx-auto">
+        {{$posts->links()}}
+    </div>
+    </div>
     @endsection
     @section('scripts')
             <!-- Page level plugins -->
