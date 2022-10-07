@@ -15,9 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,5 +36,20 @@ class User extends Authenticatable
     ];
     public function posts() {
         return $this->HasMany(Post::class);
+
+    }
+    public function permissions() {
+        return $this->belongsToMany(permission::class);
+    }
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+    public function userHasRoles($role_name){
+        foreach ($this->roles as $role) {
+            if ($role_name == $role->name){
+                return true;
+            }
+            return false;
+        }
     }
 }

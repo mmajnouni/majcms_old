@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//adding comment
 
 
 Auth::routes();
@@ -23,5 +23,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/admin', 'AdminController@index')->name('admin.index');
     Route::get('/admin/posts/create', 'PostController@create')->name('post.create');
     Route::post('/admin/post', 'PostController@store')->name('post.store');
+    Route::delete('/admin/post/{post}/destroy', 'PostController@destroy')->name('post.destroy');
     Route::get('/admin/post', 'PostController@index')->name('post.index');
+    Route::get('/admin/post/{post}/edit', 'PostController@edit')->name('post.edit')->middleware('can:view,post');
+    Route::patch('/admin/post/{post}/update', 'PostController@update')->name('post.update');
 });
