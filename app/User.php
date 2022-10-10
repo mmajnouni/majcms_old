@@ -34,6 +34,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //for correct location of images
+    public function getAvatarAttribute($value){
+        return asset($value);
+    }
+
     public function posts() {
         return $this->HasMany(Post::class);
 

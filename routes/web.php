@@ -28,4 +28,5 @@ Route::middleware('auth')->group(function(){
     Route::get('/admin/post/{post}/edit', 'PostController@edit')->name('post.edit')->middleware('can:view,post');
     Route::patch('/admin/post/{post}/update', 'PostController@update')->name('post.update');
     Route::get('/admin/users/{user}/profile','UserController@show')->name('user.show.profile');
+    Route::put('/admin/users/{user}/update','UserController@update')->name('user.profile.update');
 });
