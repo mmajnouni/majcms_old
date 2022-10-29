@@ -7,7 +7,7 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
-                        <img src="{{$user->avatar}}" alt="" width="200px">
+                        <img src="{{asset($user->avatar)}}" alt="" width="200px">
                     </div>
                     <div class="form-group">
                         <input type="file" name="avatar">
@@ -16,40 +16,52 @@
                         <label for="username">User Name </label>
                         <input type="text" name="username" class="form-control" id="username" aria-describedby="" readonly
                                value="{{$user->username}}">
-                        @error('username')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
                     </div>
                   <div class="form-group">
                     <label for="name">Name </label>
-                    <input type="text" name="name" class="form-control" id="name" aria-describedby=""
+                    <input type="text" name="name" class="form-control
+                        @error('name')
+                        is-invalid
+                        @enderror
+" id="name" aria-describedby=""
                            value="{{$user->name}}">
                       @error('name')
-                      <div class="alert alert-danger">{{$message}}</div>
+                      <div class="invalid-feedback">{{$message}}</div>
                       @enderror
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" id="email" aria-describedby=""
+                    <input type="text" name="email" class="form-control
+                        @error('email')
+                        is-invalid
+                        @enderror" id="email" aria-describedby=""
                            value="{{$user->email}}">
                       @error('email')
-                      <div class="alert alert-danger">{{$message}}</div>
+                      <div class="invalid-feedback">{{$message}}</div>
                       @enderror
                   </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="text" name="password" class="form-control" id="password" aria-describedby="">
+                        <input type="password" name="password" class="form-control
+                            @error('password')
+                            is-invalid
+                            @enderror" id="password" aria-describedby=""
+                               value="{{$user->password}}">
                         @error('password')
-                        <div class="alert alert-danger">{{$message}}</div>
+                        <div class="invalid-feedback">{{$message}}</div>
                         @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password_confirm">Password Confirmation</label>
-                        <input type="text" name="password_confirm" class="form-control" id="password_confirm" aria-describedby="">
-                        @error('password_confirm')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                    </div>
+{{--                    <div class="form-group">--}}
+{{--                        <label for="password_confirm">Password Confirmation</label>--}}
+{{--                        <input type="password" name="password_confirm" class="form-control--}}
+{{--                            @error('password_confirm')--}}
+{{--                            is-invalid--}}
+{{--                            @enderror" id="password_confirm" aria-describedby=""--}}
+{{--                               value="{{$user->password}}">--}}
+{{--                        @error('password_confirm')--}}
+{{--                        <div class="invalid-feedback">{{$message}}</div>--}}
+{{--                        @enderror--}}
+{{--                    </div>--}}
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
