@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -58,7 +59,7 @@ class User extends Authenticatable
     }
     public function userHasRoles($role_name){
         foreach ($this->roles as $role) {
-            if ($role_name == $role->name){
+            if (str::lower($role_name) == str::lower($role->name)){
                 return true;
             }
             return false;
