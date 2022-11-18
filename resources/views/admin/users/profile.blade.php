@@ -93,12 +93,41 @@
                     <tbody>
                     @foreach($roles as $role)
                         <tr>
-                            <td><input class="custom-checkbox" type="checkbox"></td>
+                            <td><input class="custom-checkbox" type="checkbox"
+                                @foreach($user->roles as $user_role)
+                                    @if($user_role->slug == $role->slug)
+                                        checked
+                                    @endif
+
+                                @endforeach
+
+
+                                ></td>
                             <td>{{$role->id}} </td>
-                            <td>{{$role->name}} </td>
+                            <td>{{$role->name}}</td>
                             <td>{{$role->slug}} </td>
-                            <td><button class="btn btn-primary">Attach</button> </td>
-                            <td><button class="btn btn-danger">Detach</button> </td>
+                            <form action="{{route('users.role.attach', $user)}}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <input type="hidden" name="role" value="{{$role->id}}">
+                                <td><button class="btn btn-primary"
+                                            @if($user->roles->contains($role))
+                                            disabled
+                                        @endif
+                                    >Attach</button> </td>
+                            </form>
+                            <form action="{{route('users.role.detach', $user)}}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <input type="hidden" name="role" value="{{$role->id}}">
+                                <td><button class="btn btn-danger"
+                                            @if(!$user->roles->contains($role))
+                                            disabled
+                                        @endif
+
+                                    >Detach</button> </td>
+                            </form>
+
 
                         </tr>
                     @endforeach

@@ -29,9 +29,9 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-//if(auth()->user()->userHasRoles('Admin')){
-//    return true;
-//}
+if(auth()->user()->userHasRoles('Admin')){
+    return true;
+}
         return $user->id == $model->id;
 
     }
