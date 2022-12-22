@@ -12,6 +12,10 @@ class RoleController extends Controller
         $roles = Role::all();
         return view('admin.roles.index', ['roles' => $roles]);
     }
+    public function edit(Role $role) {
+        return view('admin.roles.edit', ['roles' => $role]);
+    }
+
     public function store() {
         request()->validate([
             'name' => 'required'
@@ -22,4 +26,12 @@ class RoleController extends Controller
         ]);
         return back();
     }
+
+    public function destroy(Role $role) {
+        $role->delete();
+        session()->flash('role-deleted', 'Role deleted ' . $role->name );
+        return back();
+    }
+
+
 }
