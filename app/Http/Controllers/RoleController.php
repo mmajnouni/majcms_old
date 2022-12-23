@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\permission;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -13,7 +14,22 @@ class RoleController extends Controller
         return view('admin.roles.index', ['roles' => $roles]);
     }
     public function edit(Role $role) {
-        return view('admin.roles.edit', ['roles' => $role]);
+        return view('admin.roles.edit', [
+            'roles' => $role,
+            'permissions' => Permission::all()
+        ]);
+    }
+    public function update(Role $role){
+        $role->name = Str::ucfirst(request('name'));
+        $role->slug = Str::of(request('name'))->slug('-');
+        if ($role->isDirty('name')) {
+            $role->save();
+            session()->flash('role-update', 'Role Updated: ' . $role->name);
+        }else{
+            session()->flash('role-update', 'Notting is changed');
+        }
+
+        return back();
     }
 
     public function store() {
