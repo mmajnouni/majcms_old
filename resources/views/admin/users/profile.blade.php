@@ -23,7 +23,7 @@
                         @error('name')
                         is-invalid
                         @enderror
-" id="name" aria-describedby=""
+                        " id="name" aria-describedby=""
                            value="{{$user->name}}">
                       @error('name')
                       <div class="invalid-feedback">{{$message}}</div>
@@ -64,6 +64,76 @@
 {{--                    </div>--}}
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Attach</th>
+                        <th scope="col">Detach</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Option</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Slug</th>
+                        <th scope="col">Attach</th>
+                        <th scope="col">Detach</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @foreach($roles as $role)
+                        <tr>
+                            <td><input class="custom-checkbox" type="checkbox"
+                                @foreach($user->roles as $user_role)
+                                    @if($user_role->slug == $role->slug)
+                                        checked
+                                    @endif
+
+                                @endforeach
+
+
+                                ></td>
+                            <td>{{$role->id}} </td>
+                            <td>{{$role->name}}</td>
+                            <td>{{$role->slug}} </td>
+                            <form action="{{route('users.role.attach', $user)}}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <input type="hidden" name="role" value="{{$role->id}}">
+                                <td><button class="btn btn-primary"
+                                            @if($user->roles->contains($role))
+                                            disabled
+                                        @endif
+                                    >Attach</button> </td>
+                            </form>
+                            <form action="{{route('users.role.detach', $user)}}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <input type="hidden" name="role" value="{{$role->id}}">
+                                <td><button class="btn btn-danger"
+                                            @if(!$user->roles->contains($role))
+                                            disabled
+                                        @endif
+
+                                    >Detach</button> </td>
+                            </form>
+
+
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
             </div>
         </div>
     @endsection
