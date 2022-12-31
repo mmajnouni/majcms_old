@@ -2,9 +2,7 @@
 
 @section('content')
     <h1>home</h1>
-        <h1 class="my-4">Page Heading
-            <small>Secondary Text</small>
-        </h1>
+
 
         <!-- Blog Post -->
     @foreach($post as $posts)
@@ -16,8 +14,8 @@
                 <a href="{{route('post', $posts->id)}}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
-                Posted on January 1, 2017 by
-                <a href="">Start Bootstrap</a>
+                Posted on {{$posts->updated_at}} by
+                <a href="">{{$posts->user->name}}</a>
             </div>
         </div>
         @endforeach
